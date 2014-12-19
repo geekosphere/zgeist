@@ -1,0 +1,10 @@
+*.py[cod]
+pip-log.txt
+pip-delete-this-directory.txt
+bundle.min.js
+bundle.min.css
+local.yaml
+*.db
+*.sqlite
+.webassets-cache
+

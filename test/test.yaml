@@ -1,0 +1,10 @@
+---
+database:
+  uri: 'sqlite:///:memory:'
+flask:
+  TESTING: true
+  WTF_CSRF_ENABLED: false
+  CSRF_ENABLED: false
+celery:
+  CELERY_ALWAYS_EAGER: true
+

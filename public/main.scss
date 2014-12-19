@@ -1,0 +1,67 @@
+
+@mixin inline-list($sep) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+        display: inline;
+        &:before {
+            padding: 0 4px 0 0;
+            content: $sep;
+            color: #999;
+        }
+        &:first-child:before {
+            padding: 0;
+            content: "";
+        }
+    }
+}
+
+@mixin middot-list {
+    @include inline-list("\00b7");
+}
+
+@mixin pipe-list {
+    @include inline-list("|");
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 0.75em;
+    margin: 0; padding: 0;
+    background-color: #f1f1f1;
+}
+
+a {
+    color: #4590c2;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.header {
+    background-color: white;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 20px 32px 10px 32px;
+    text-align: right;
+    .left {
+        float: left;
+    }
+    .right {
+        padding-top: 3px;
+    }
+}
+
+.menu {
+    @include pipe-list;
+}
+
+.container {
+    padding: 13px 18px;
+    .body {
+        background-color: white;
+        padding: 19px 22px;
+    }
+}
+

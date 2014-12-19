@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block body %}
+<form method="POST" name="item" action="{{ url_for('item.create') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
+
+  {% if form.errors %}
+    <ul class="errors">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].name }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+  {% endif %}
+
+  {{ form.urls.label }}
+  {{ form.urls }}
+
+  <button type="submit" name="submit">Upload</button>
+
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <title>title.</title>
+  {% assets "main_css" %}
+  <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
+  {% endassets %}
+</head>
+<body>
+  <div class="page">
+
+    <div class="header">
+      <div class="left">
+        <img src="/title.png" width="80" height="20" />
+        <img src="/title_arrow.png" width="10" height="10" />
+      </div>
+      <div class="right">
+        {% include 'macro/menu.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="body">
+        {% block body %}{% endblock %}
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

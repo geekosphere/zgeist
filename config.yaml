@@ -1,0 +1,63 @@
+# zeitgeist configuration
+---
+database:
+  uri: 'sqlite:///%approot%/database.db'
+app:
+  static_url_path: ''
+  static_folder: '%approot%/public'
+  template_folder: '%approot%/views'
+flask:
+  DEBUG: true
+  SECRET_KEY: If you don't change this north korea is gonna hack you!
+  SESSION_COOKIE_NAME: zg
+  # expire permanent cookies in a year
+  PERMANENT_SESSION_LIFETIME: 31536000
+  # smtp server configuration:
+  MAIL_SERVER: localhost
+  MAIL_PORT: 25
+  MAIL_USE_TLS: false
+  MAIL_USE_SSL: false
+  MAIL_USERNAME: null
+  MAIL_PASSWORD: null
+celery:
+  CELERY_BROKER_URL: 'amqp://localhost'
+  CELERY_RESULT_BACKEND: 'amqp://localhost'
+  CELERY_TASK_SERIALIZER: 'json'
+  CELERY_RESULT_SERIALIZER: 'json'
+  CELERY_ACCEPT_CONTENT: ['json']
+  CELERY_TIMEZONE: 'Europe/Berlin'
+  CELERY_ENABLE_UTC: true
+  CELERY_DEFAULT_QUEUE: 'default'
+# logging configuration:
+# http://docs.python.org/2/library/logging.config.html#logging-config-dictschema
+logger:
+  version: 1
+  formatters:
+    brief:
+      format: '%(asctime)s %(levelname)s [%(name)s] - %(message)s'
+      datefmt: '%H:%M:%S'
+    precise:
+      format: '%(asctime)s %(levelname)s [%(name)s] - %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+  loggers:
+    # if set to DEBUG will log SQL Queries:
+    'sqlalchemy.engine.base.Engine':
+      level: ERROR
+      handlers: [console]
+    passlib:
+      level: ERROR
+      handlers: [console]
+    flask:
+      level: DEBUG
+      handlers: [console]
+    zgeist:
+      level: DEBUG
+      handlers: [console]
+  handlers:
+    console:
+      class      : logging.StreamHandler
+      formatter  : brief
+      level      : DEBUG
+      stream     : ext://sys.stdout
+
+
