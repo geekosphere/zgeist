@@ -1,22 +1,79 @@
 {% extends 'layout.html' %}
 {% block body %}
-<form method="POST" name="item" action="{{ url_for('item.create') }}">
+
+<h1>Post New Item</h1>
+
+<form method="POST" name="item" action="{{ url_for('item.create') }}" id="item-create-form">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
 
   {% if form.errors %}
-    <ul class="errors">
+  <div class="block-error">
+    <ul>
         {% for field_name, field_errors in form.errors|dictsort if field_errors %}
             {% for error in field_errors %}
-                <li>{{ form[field_name].name }}: {{ error }}</li>
+              <li><span>{{ form[field_name].name }}</span> - {{ error }}</li>
             {% endfor %}
         {% endfor %}
     </ul>
+  </div>
   {% endif %}
 
-  {{ form.urls.label }}
-  {{ form.urls }}
+  <div class="block">
+    <div class="block-title">Add URLs</div>
+    <div class="block-body">
+      {{ form.urls(rows=1) }}
+      <label for="urls" class="label-block">
+        Enter urls to images, videos or any website you wish. Read <a href="">this wiki</a> for a full list of specially handled sites.
+      </label>
+    </div>
+  </div>
 
-  <button type="submit" name="submit">Upload</button>
+  <div class="block">
+    <div class="block-title">Upload</div>
+    <div class="block-body">
+      {{ form.upload(multiple=True) }}
+      <label for="upload" class="label-block">
+        Upload files from your computer, click with <code>Control</code> to select more than one. The maximum size is <code>25 MiB</code>.
+      </label>
+    </div>
+  </div>
+
+  <div class="block title-description">
+    <div class="block-title">Title &amp; Description <span>(optional)</span></div>
+    <div class="block-body">
+      {{ form.title(placeholder='Enter Title') }}
+      {{ form.description(rows=3, placeholder='Enter Description') }}
+    </div>
+  </div>
+
+  <div class="block tags">
+    <div class="block-title">Tags <span>(optional)</span></div>
+    <div class="block-body">
+      <input type="text" id="add-tag" placeholder="">
+      <ul class="tag-list">
+        <li class="no-tags">No tags selected.</li>
+        {#
+        <li><span class="del-tag">✖</span> animated</li>
+        <li><span class="del-tag">✖</span> nsfw</li>
+        <li><span class="del-tag">✖</span> Jack Black</li>
+        #}
+      </ul>
+    </div>
+  </div>
+
+  <div class="block tags">
+    <div class="block-title">Options</div>
+    <div class="block-body">
+      <label>{{ form.group }} group all URLs/files into a single item</label>
+      <br>
+      <label>{{ form.irc_announce }} announce in <abbr title="Teranetworks: #test">#test</abbr></label>
+    </div>
+  </div>
+
+  <div class="block-submit">
+    <button type="submit" name="submit">Create</button>
+  </div>
 
 </form>
+
 {% endblock %}

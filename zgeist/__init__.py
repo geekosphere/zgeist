@@ -35,8 +35,11 @@ def create_app():
     CsrfProtect(app)
 
     assets = Environment(app)
+    assets.load_path = config['assets']
     assets.url = app.static_url_path
-    assets.register('main_css', Bundle('main.scss', filters='pyscss,cssmin', output='main.min.css'))
+    assets.register('main_bundle_css', Bundle('main.scss', filters='pyscss', output='main_bundle.min.css')) # ,cssmin
+    #assets.register('bundle_js', Bundle('jquery/dist/jquery.min.js', 'underscore/underscore-min.js', 'js/*.js', filters='jsmin', output='bundle.min.js'))
+    assets.register('bundle_js', Bundle('jquery/dist/jquery.js', 'underscore/underscore.js', 'js/*.js', output='bundle.min.js'))
 
     from .web import register_all_blueprints
     register_all_blueprints(app)

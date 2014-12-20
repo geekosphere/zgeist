@@ -19,6 +19,8 @@ flask:
   MAIL_USE_SSL: false
   MAIL_USERNAME: null
   MAIL_PASSWORD: null
+  PYSCSS_LOAD_PATHS:
+    - '%approot%/bower_components/bootstrap-sass/assets/stylesheets'
 celery:
   CELERY_BROKER_URL: 'amqp://localhost'
   CELERY_RESULT_BACKEND: 'amqp://localhost'
@@ -28,6 +30,9 @@ celery:
   CELERY_TIMEZONE: 'Europe/Berlin'
   CELERY_ENABLE_UTC: true
   CELERY_DEFAULT_QUEUE: 'default'
+assets:
+  - '%approot%/public'
+  - '%approot%/bower_components'
 # logging configuration:
 # http://docs.python.org/2/library/logging.config.html#logging-config-dictschema
 logger:

@@ -24,4 +24,5 @@ class UTCDateTime(TypeDecorator):
         return value
 
 from .item import Item
+from .tag import Tag
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>title.</title>
-  {% assets "main_css" %}
+  {% assets "main_bundle_css" %}
   <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
   {% endassets %}
 </head>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="wrapper">
 
       <div class="body">
         {% block body %}{% endblock %}
@@ -29,5 +29,9 @@
     </div>
 
   </div>
+
+  {% assets "bundle_js" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
 </body>
 </html>

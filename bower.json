@@ -1,0 +1,17 @@
+{
+  "name": "zgeist",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "twbs/bootstrap-sass#~3.2.0",
+    "jquery": "~2.1.3",
+    "underscore": "~1.7.0"
+  }
+}

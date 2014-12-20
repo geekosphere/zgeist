@@ -8,6 +8,7 @@ import urlparse
 import datetime
 from copy import deepcopy
 from os.path import join, dirname, abspath, realpath
+from collections import OrderedDict
 
 import pytz
 import yaml
@@ -33,6 +34,9 @@ def dict_merge(a, b):
         else:
             result[k] = deepcopy(v)
     return result
+
+def unique(items):
+    return list(OrderedDict.fromkeys(items))
 
 class Struct:
     def __init__(self, **entries):
