@@ -1,12 +1,14 @@
 *.py[cod]
-pip-log.txt
-pip-delete-this-directory.txt
 *.min.js
 *.min.css
-local.yaml
 *.db
 *.sqlite
+*.xcf
+*.log
 .webassets-cache
 bower_components
-*.xcf
+pip-log.txt
+pip-delete-this-directory.txt
+local.yml
+doc/build
 

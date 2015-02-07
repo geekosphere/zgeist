@@ -1,0 +1,52 @@
+
+@mixin inline-list($sep) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+        display: inline;
+        &:before {
+            padding: 0 4px 0 0;
+            content: $sep;
+            color: #999;
+        }
+        &:first-child:before {
+            padding: 0;
+            content: "";
+        }
+    }
+}
+
+@mixin middot-list {
+    @include inline-list("\00b7");
+}
+
+@mixin pipe-list {
+    @include inline-list("|");
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+            border-radius: $radius;
+}
+
+/* prevents padding from influencing sizes */
+@mixin border-box-sizing {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+@mixin user-select-none {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+}
+
+@mixin box-shadow($color, $alpha: 0.5) {
+    -webkit-box-shadow: 1px 1px 2px 0px rgba($color, $alpha);
+       -moz-box-shadow: 1px 1px 2px 0px rgba($color, $alpha);
+            box-shadow: 1px 1px 2px 0px rgba($color, $alpha);
+}
+

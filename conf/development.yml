@@ -1,0 +1,9 @@
+---
+assets:
+  js_all:
+    filters: 
+    output: bundle.js
+  css_all:
+    filters: pyscss, cssmin
+    output: bundle.css
+

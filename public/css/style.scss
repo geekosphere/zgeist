@@ -1,0 +1,155 @@
+
+$font-family-base: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@import 'bootstrap';
+@import 'mixins';
+
+body {
+    background-color: #f1f1f1;
+}
+
+header {
+    height: 70px;
+    background-color: white;
+    border-bottom: 1px solid #e8e8e8;
+    @include make-row();
+    .title {
+        padding: 35px 0 0 35px;
+        @include make-sm-column(6);
+        h1 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #3d3d3d;
+            margin: 0;
+            a { color: inherit; &:hover { text-decoration: none } }
+        }
+    }
+    nav {
+        text-align: right;
+        @include pipe-list();
+        @include make-sm-column(6);
+        padding: 35px 30px 0 0;
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
+
+section, footer {
+    @include make-row();
+    margin: 15px 0 0 0;
+    padding: 25px;
+    background-color: white;
+}
+
+.content {
+    h2 {
+        padding: 0 0 5px 0;
+        margin: 0 0 20px 0;
+        font-size: 20px;
+        border-bottom: 1px solid #ddd;
+    }
+}
+
+.panel-body {
+    .form-group {
+        margin-bottom: 0px;
+        .help-block {
+            margin-bottom: 0px;
+        }
+    }
+
+    .checkbox {
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+input#title {
+    margin-bottom: 10px;
+}
+
+footer {
+    font-size: 11px;
+    text-align: center;
+}
+
+
+.tag-list {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+    li {
+        display: inline;
+        margin-right: 4px;
+        white-space: nowrap;
+        border-bottom: 1px solid #ccc;
+        padding: 3px;
+        display: inline-block;
+        font-size: 13px;
+        // line-height: 2.3em;
+    }
+    .no-tags {
+        font-style: italic;
+        color: #999;
+    }
+    span.del-tag {
+        color: #a94442;
+        font-size: 13px; cursor: pointer;
+    }
+    li.tag-add {
+        input {
+            width: 140px;
+            padding: 0;
+            display: inline-block;
+            font-size: 13px;
+            border: 0px solid transparent;
+
+            background-color: transparent;
+            border-color: transparent;
+            outline: 0;
+            &:focus, &:hover {
+                background-color: transparent;
+                border-color: transparent;
+                outline: 0;
+            }
+        }
+    }
+}
+
+.tag-suggestions {
+    position: absolute;
+    display: block;
+    background-color: white;
+    width: 240px;
+    padding: 5px 12px;
+    margin: 0;
+    ul {
+        padding: 0; margin: 0;
+        li {
+            color: #333;
+            font-size: 0.9em;
+            padding: 4px 3px;
+            margin: 0;
+            line-height: 1em;
+            display: block;
+            border-color: transparent;
+            cursor: pointer;
+            @include user-select-none;
+        }
+        li.active, li:hover {
+            background-color: darken(white, 5%);
+        }
+    }
+    border: 1px solid #ccc;
+    @include border-box-sizing;
+    @include box-shadow(#999);
+}
+
+
+

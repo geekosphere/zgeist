@@ -3,6 +3,7 @@ Flask-WTF
 Flask-Assets
 Flask-Script
 Flask-Mail
+Flask-SocketIO
 Werkzeug
 jsmin
 cssmin
@@ -18,5 +19,12 @@ pytz
 py-bcrypt
 requests
 celery
+librabbitmq
+kombu
 rfc3987
+sphinx
+mock
+python-magic
+Pillow
+pytest
 

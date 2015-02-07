@@ -1,0 +1,18 @@
+---
+# Configuration used for the test environment
+# NOTE: some tests require specific config values to pass
+database:
+  uri: 'sqlite:///:memory:'
+client:
+  temp: '/tmp/zg-test'
+  max_size: '1MiB'
+  chunk_size: '250KiB'
+  ssl_verify: false
+flask:
+  TESTING: true
+  WTF_CSRF_ENABLED: false
+  CSRF_ENABLED: false
+celery:
+  CELERY_ALWAYS_EAGER: true
+  CELERYD_HIJACK_ROOT_LOGGER: false
+

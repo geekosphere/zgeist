@@ -1,9 +1,9 @@
+{% set title = 'Create Item' %}
 {% extends 'layout.html' %}
 {% block body %}
 
-<h1>Post New Item</h1>
-
-<form method="POST" name="item" action="{{ url_for('item.create') }}" id="item-create-form">
+<form method="POST" action="{{ url_for('frontend.upload') }}" id="item-upload"
+  enctype="multipart/form-data">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
 
   {% if form.errors %}
@@ -11,68 +11,83 @@
     <ul>
         {% for field_name, field_errors in form.errors|dictsort if field_errors %}
             {% for error in field_errors %}
-              <li><span>{{ form[field_name].name }}</span> - {{ error }}</li>
+              <li><span>{{ form[field_name].label }}</span> - {{ error }}</li>
             {% endfor %}
         {% endfor %}
     </ul>
   </div>
   {% endif %}
 
-  <div class="block">
-    <div class="block-title">Add URLs</div>
-    <div class="block-body">
-      {{ form.urls(rows=1) }}
-      <label for="urls" class="label-block">
-        Enter urls to images, videos or any website you wish. Read <a href="">this wiki</a> for a full list of specially handled sites.
+  <div class="panel panel-default">
+    <div class="panel-heading">Add URLs</div>
+    <div class="panel-body">
+      <div class="form-group">
+      {{ form.urls(rows=1, class='form-control') }}
+      <p class="help-block">
+        Enter urls to images, videos or any website you wish. Read
+        <a href="">this wiki</a> for a full list of specially handled sites.
       </label>
+      </div>
     </div>
   </div>
 
-  <div class="block">
-    <div class="block-title">Upload</div>
-    <div class="block-body">
+  <div class="panel panel-default">
+    <div class="panel-heading">Upload File(s)</div>
+    <div class="panel-body">
+      <div class="form-group">
       {{ form.upload(multiple=True) }}
-      <label for="upload" class="label-block">
-        Upload files from your computer, click with <code>Control</code> to select more than one. The maximum size is <code>25 MiB</code>.
-      </label>
+      <p class="help-block">
+        Upload files from your computer, Control-click to
+        select more than one. The maximum size is <code>25 MiB</code>.
+      </p>
+      </div>
     </div>
   </div>
 
-  <div class="block title-description">
-    <div class="block-title">Title &amp; Description <span>(optional)</span></div>
-    <div class="block-body">
-      {{ form.title(placeholder='Enter Title') }}
-      {{ form.description(rows=3, placeholder='Enter Description') }}
+  <div class="panel panel-default">
+    <div class="panel-heading">Item Information <span>(optional)</span></div>
+    <div class="panel-body">
+      <div class="form-group">
+      {{ form.title(placeholder='Enter Title', class='form-control') }}
+      {{ form.description(rows=3, placeholder='Enter Description', class='form-control') }}
+      </div>
     </div>
   </div>
 
-  <div class="block tags">
-    <div class="block-title">Tags <span>(optional)</span></div>
-    <div class="block-body">
-      <input type="text" id="add-tag" placeholder="">
-      <ul class="tag-list">
-        <li class="no-tags">No tags selected.</li>
-        {#
-        <li><span class="del-tag">✖</span> animated</li>
-        <li><span class="del-tag">✖</span> nsfw</li>
-        <li><span class="del-tag">✖</span> Jack Black</li>
-        #}
+  <div class="panel panel-default">
+    <div class="panel-heading">Tags <span>(optional)</span></div>
+    <div class="panel-body">
+      <div class="form-group tag-edit">
+      {{ form.tags }}
+      <ul class="tag-list" style="display: none;">
+        <li class="tag-add">
+          <input type="text" placeholder="Enter tag to add">
+        </li>
       </ul>
+      <div class="tag-suggestions" style="display: none;">
+        <ul></ul>
+      </div>
+      <p class="help-block">
+        Comma-seperated list of tags.
+      </p>
+      </div>
     </div>
   </div>
 
-  <div class="block tags">
-    <div class="block-title">Options</div>
-    <div class="block-body">
-      <label>{{ form.group }} group all URLs/files into a single item</label>
-      <br>
-      <label>{{ form.irc_announce }} announce in <abbr title="Teranetworks: #test">#test</abbr></label>
+  <div class="panel panel-default">
+    <div class="panel-heading">Options</div>
+    <div class="panel-body">
+      <div class="checkbox">
+        <label>{{ form.group }} group all URLs/files into a single item</label>
+      </div>
+      <div class="checkbox">
+        <label>{{ form.irc_announce }} announce in
+          <abbr title="{{ config('irc.label') }}">{{ config('irc.channel') }}</abbr></label>
+      </div>
     </div>
   </div>
 
-  <div class="block-submit">
-    <button type="submit" name="submit">Create</button>
-  </div>
+  <button type="submit" name="submit" class="btn btn-primary">Upload</button>
 
 </form>
 

@@ -1,0 +1,125 @@
+---
+# Configuration used for all environments
+title: 'Zeitgeist'
+database:
+  uri: 'sqlite:///%root%/database.db'
+  echo: false
+app:
+  static_url_path: ''
+  static_folder: '%root%/public'
+  template_folder: '%root%/views'
+client:
+  user_agent: 'Mozilla/5.0 (compatible; Zeitgeist/git)'
+  ssl_verify: false
+  proxies:
+  # magic numbers detected by the zeitgeist url discovery
+  magic_numbers:
+  - ['image/jpeg',  'FFD8FFE0'] # ....
+  - ['image/gif',   '474946383761'] # GIF89a
+  - ['image/gif',   '474946383961'] # GIF87a
+  - ['image/png',   '89504E470D0A1A0A'] # .PNG....
+  - ['image/webp',  '524946460000000057454250'] # RIFF????WEBP
+  - ['image/bmp',   '424D'] # BM
+  - ['image/tiff',   '49492A00'] # II*.
+  temp: '/tmp/zg' # temporary directory (created) for downloads
+  max_size: '45MiB'
+  chunk_size: '250KiB'
+upload:
+  max_size: '45MiB'
+  accept_mimetypes:
+  - 'image/jpeg'
+  - 'image/gif'
+  - 'image/png'
+  - 'image/webp'
+  - 'image/bmp'
+  - 'image/tiff'
+flask:
+  DEBUG: true
+  SECRET_KEY: If you don't change this north korea is gonna hack you!
+  SESSION_COOKIE_NAME: zg
+  # expire permanent cookies in a year
+  PERMANENT_SESSION_LIFETIME: 31536000
+  # smtp server configuration:
+  MAIL_SERVER: localhost
+  MAIL_PORT: 25
+  MAIL_USE_TLS: false
+  MAIL_USE_SSL: false
+  MAIL_USERNAME: null
+  MAIL_PASSWORD: null
+  PYSCSS_LOAD_PATHS:
+    - %root%/public/css    
+    - %root%/bower_components/bootstrap-sass-official/assets/stylesheets
+  PYSCSS_STATIC_URL: ''
+  PYSCSS_STATIC_ROOT: ''
+celery:
+  CELERY_BROKER_URL: 'amqp://localhost'
+  CELERY_RESULT_BACKEND: 'amqp://localhost'
+  CELERY_TASK_SERIALIZER: 'json'
+  CELERY_RESULT_SERIALIZER: 'json'
+  CELERY_ACCEPT_CONTENT: ['json']
+  CELERY_TIMEZONE: 'Europe/Berlin'
+  CELERY_ENABLE_UTC: true
+  CELERY_DEFAULT_QUEUE: 'default'
+irc:
+  active: true
+  channel: '#test'
+  label: 'Teranetworks: #test'
+assets:
+  js_all:
+    filters: jsmin
+    output: bundle.min.js
+    contents:
+      - lodash/lodash.js
+      - jquery/dist/jquery.js
+      - sprintf/src/sprintf.js
+      - js/*.js
+  css_all:
+    filters: pyscss, cssmin
+    output: bundle.min.css
+    contents:
+      - css/style.scss
+# logging configuration:
+# http://docs.python.org/2/library/logging.config.html#logging-config-dictschema
+logger:
+  version: 1
+  formatters:
+    brief:
+      #format: '%(asctime)s %(levelname)-15s [%(name)s] - %(message)s'
+      format: '%(message)s'
+      datefmt: '%H:%M:%S'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+    precise:
+      #format: '%(asctime)s %(levelname)-15s [%(name)s] - %(message)s'
+      format: '%(asctime)s - %(levelname)-5s - %(name)-20s - %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+  loggers:
+    # if set to DEBUG will log SQL Queries:
+    'requests':
+      level: DEBUG
+      handlers: [console]
+    'sqlalchemy.engine.base.Engine':
+      level: ERROR
+      handlers: [console]
+    passlib:
+      level: ERROR
+      handlers: [console]
+    flask:
+      level: DEBUG
+      handlers: [console]
+    zg:
+      level: DEBUG
+      handlers: [console, file]
+  handlers:
+    console:
+      class      : logging.StreamHandler
+      formatter  : brief
+      level      : DEBUG
+      stream     : ext://sys.stdout
+    file:
+      class      : logging.handlers.RotatingFileHandler
+      formatter  : precise
+      filename   : zeitgeist.log
+      maxBytes   : 16777216
+      level      : DEBUG
+      backupCount: 10
+

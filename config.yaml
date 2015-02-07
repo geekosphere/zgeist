@@ -30,6 +30,8 @@ celery:
   CELERY_TIMEZONE: 'Europe/Berlin'
   CELERY_ENABLE_UTC: true
   CELERY_DEFAULT_QUEUE: 'default'
+event:
+  uri: 'amqp://localhost'
 assets:
   - '%approot%/public'
   - '%approot%/bower_components'
@@ -53,6 +55,9 @@ logger:
       level: ERROR
       handlers: [console]
     flask:
+      level: DEBUG
+      handlers: [console]
+    kombu:
       level: DEBUG
       handlers: [console]
     zgeist:

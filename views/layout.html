@@ -2,36 +2,43 @@
 <html lang="en-US">
 <head>
   <meta charset="UTF-8" />
-  <title>title.</title>
-  {% assets "main_bundle_css" %}
-  <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
+  <title>{{ config('title') }} » {{ title }}</title>
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,700,600,300" rel="stylesheet" type="text/css">
+  {% assets "css_all" %}
+  <link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css">
   {% endassets %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <div class="page">
-
-    <div class="header">
-      <div class="left">
-        <img src="/title.png" width="80" height="20" />
-        <img src="/title_arrow.png" width="10" height="10" />
+  <div class="wrapper container-fluid">
+    <header>
+      <div class="title">
+        <h1><a href="{{ url_for('index') }}">{{ config('title') }}</a></h1>
       </div>
-      <div class="right">
-        {% include 'macro/menu.html' %}
-      </div>
-    </div>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('frontend.upload') }}">Post New</a></li>
+          <li><a href="">Settings</a></li>
+          <li>Logged In as <a href="">apoc</a></li>
+          <li><a href="">Log Out</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <div class="wrapper">
+    <section class="content">
+      <h2>{{title}}</h2>
 
-      <div class="body">
-        {% block body %}{% endblock %}
-      </div>
+      {% block body %}{% endblock %}
+    </section>
 
-    </div>
-
+    <footer>
+      Zeitgeist is a <a href="">free and open source</a> software project
+    </footer>
   </div>
 
-  {% assets "bundle_js" %}
+  {% assets "js_all" %}
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
 </body>
 </html>
+
