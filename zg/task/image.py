@@ -6,7 +6,7 @@ from __future__ import division, print_function, absolute_import, unicode_litera
 import re
 import time
 import logging
-from zg.util import config, url_valid
+from zg.util import config, url_valid, mktemp
 from .helpers import TaskMapper
 from zg.app import celery
 from PIL import Image
@@ -15,6 +15,7 @@ logger = logging.getLogger('zg.task.image')
 
 class ImageQuery(object):
     def __init__(self, filename):
+        logger.info('load image: ' + filename)
         self.img = Image.open(filename)
         self.format = self.img.format
         self.mode = self.img.mode
@@ -31,6 +32,9 @@ class ImageQuery(object):
     def close(self):
         self.img.close()
 
+    def save(self, filename):
+        self.img.save(filename, self.format)
+
     def __enter__(self):
         return self
 
@@ -39,20 +43,24 @@ class ImageQuery(object):
 
 @celery.task
 def discover(item_id, tempfile, **data):
-    logger.info('discover({}, {}, {}, {})'.format(item_id, tempfile, data))
+    logger.info('discover({}, {}, {})'.format(item_id, tempfile, data))
 
-    # collect image information
-    # if ImageQuery
-    with ImageQuery(tempfile) as img:
-        data['image'] = {
-                'animated': img.is_animated(),
-                'format':   img.format,   
-                'mode':     img.mode,     
-                'dimension':img.dimension}
-    logger.info('image properties: ' + repr(data['image']))
+    try:
+        # collect image metadata:
+        with ImageQuery(tempfile) as img:
+            data['meta'] = {
+                    'animated': img.is_animated(),
+                    'format':   img.format,   
+                    'mode':     img.mode,     
+                    'dimension':img.dimension}
+
+    except Exception as e:
+        logger.error('discover error: ' + str(e))
+
+    logger.info('image properties: ' + repr(data['meta']))
 
     # store fragment
-    fragment.store.delay(item_id, tempfile, data)
+    #fragment.store.delay(item_id, tempfile, data)
 
     
 

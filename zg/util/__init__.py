@@ -15,7 +15,7 @@ logger = logging.getLogger('zg.util')
 
 def mktemp():
     fd, tempfile = mkstemp('.dl', '', config('client.temp'))
-    logger.info('temporary file created: ' + repr(tempfile))
+    logger.debug('temporary file created: ' + repr(tempfile))
     return (os.fdopen(fd, 'w'), tempfile)
 
 def cptemp(source):

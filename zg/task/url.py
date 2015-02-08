@@ -18,16 +18,17 @@ logger = logging.getLogger('zg.task.url')
 url_mapper = TaskMapper()
 
 @celery.task
-def discover(item_id, urls):
-    """Delegates urls by domain or pattern matching."""
-    logger.info('discover(item: {}, urls: {})'.format(item_id, urls))
+def discover(item_id, url):
+    """Delegates a url by domain or pattern matching."""
+    logger.info('discover(item: {}, url: {})'.format(item_id, url))
 
-    for url in urls:
-        # ensure url validity
-        if not url_valid(url): continue
+    # ensure url validity
+    if not url_valid(url):
+        logger.error('url is invalid')
+        return
 
-        # continue with generic or url specific task
-        (url_mapper.get_task_for_url(url) or generic).delay(item_id, url)
+    # continue with generic or url specific task
+    (url_mapper.get_task_for_url(url) or generic).delay(item_id, url)
 
 @celery.task
 def generic(item_id, url):

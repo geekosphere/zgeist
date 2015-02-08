@@ -1,11 +1,7 @@
+# Zeitgeist
 
-# work in progress
+## License
 
-
-
-Start the celery worker process:
-
-```
-celery worker -A zgeist.celery
-```
+Zeitgeist is licensed GNU Affero General Public License version 3.
+For a full license text read `LICENSE`.
 

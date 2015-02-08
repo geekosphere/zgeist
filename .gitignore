@@ -11,4 +11,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 local.yml
 doc/build
+conf/local.yml
+bundle.js
+bundle.css
 

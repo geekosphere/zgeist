@@ -1,0 +1,11 @@
+--- # example local configuration
+production:
+  database:
+    uri: 'postgresql://zg:changeme@localhost/zg'
+development:
+  database:
+    uri: 'postgresql://zg:changeme@localhost/zg'
+test:
+  database:
+    uri: 'postgresql://zg:changeme@localhost/zg_test'
+

@@ -17,11 +17,10 @@ def test_validate_file():
 
 def test_discover():
     tempfile = cptemp(root('test/files/test3.gif'))
-
     # image file delegate to image.discover:
     with MockTask('zg.task.image.discover') as mock:
         discover.delay(1, tempfile)
         mock.assert_called_once_with(1, tempfile, mimetype='image/gif', url=None, upload=None)
-
     os.remove(tempfile)
+
 

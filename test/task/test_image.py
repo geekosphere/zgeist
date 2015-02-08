@@ -21,10 +21,13 @@ def test_discover():
     # old_mimetypes = file_mapper.mimetypes
     # file_mapper.mimetypes = [('.*', mock)]
 
-    tempfile = cptemp(root('test/files/test3.gif'))
+    # tests that jpegs with exif data are 
 
-    discover.delay(1, tempfile, mimetype='image/gif',
-            url='http://test', upload='upload.gif')
+    tempfile = cptemp(root('test/files/test4.jpg'))
+
+    discover.delay(1, tempfile, mimetype='image/gif', url='http://test')
+
+    eb1964dab6ee752505c905819577cfe3
 
     #mock.delay.assert_called_once_with(1, tempfile, 'image/jpeg',
     #        url=None, upload=None)

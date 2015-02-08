@@ -28,7 +28,18 @@ class ItemModel(Base):
     #: item stauts either pending, failed or available
     status      = Column(String(32))
 
+class FragmentModel(Base):
+    __tablename__ = 'fragment'
 
+    id          = Column(Integer, primary_key=True)
+
+    item_id     = Column(Integer, ForeignKey('item.id'))
+
+    type        = Column(Enum('image'))
+
+    tempfile    = Column(String(255))
+
+    data        = Column()
 
 
 

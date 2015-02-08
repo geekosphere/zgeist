@@ -14,9 +14,8 @@ import os
 
 def test_discover():
     with MockTask('zg.task.url.generic') as mock:
-        discover.delay(1, ['http://example.com/test_1.jpeg', 'http://example.com/test_2.jpeg'])
-        mock.assert_any_call(1, 'http://example.com/test_1.jpeg')
-        mock.assert_any_call(1, 'http://example.com/test_2.jpeg')
+        discover.delay(1, 'http://example.com/test_1.jpeg')
+        mock.assert_called_once_with(1, 'http://example.com/test_1.jpeg')
 
     with MockTask('zg.task.url.generic') as mock:
         discover.delay(1, 'httpX://invalid_url/')
@@ -25,7 +24,7 @@ def test_discover():
 def test_generic():
     with MockTask('zg.task.url.download') as mock:
         generic.delay(1, 'http://apoc.cc/test/img/test1.jpg')
-        mock.assert_any_call(1, 'http://apoc.cc/test/img/test1.jpg')
+        mock.assert_called_once_with(1, 'http://apoc.cc/test/img/test1.jpg')
 
     with MockTask('zg.task.url.download') as mock:
         generic.delay(1, 'http://apoc.cc/test/img/')

@@ -15,7 +15,9 @@ from zg.task import image
 
 logger = logging.getLogger('zg.task.file')
 
+# map tasks by mimetype:
 file_mapper = TaskMapper()
+file_mapper.by_mimetype('image/*')(image.discover)
 
 def gen_checksum(filename):
     return md5file(filename)
@@ -24,20 +26,21 @@ def gen_cryptohash(filename):
     return sha512file(filename)
 
 def validate_file(tempfile):
+    logger.debug('validate file: %s', tempfile)
     if not os.path.isfile(tempfile):
-        logger.info('tempfile validation failure: no tempfile')
+        logger.error('tempfile validation failure: no tempfile')
         return (None, None)
 
     max_size = to_bytes(config('upload.max_size'))
     filesize = os.path.getsize(tempfile)
     if filesize > max_size:
-        logger.info('tempfile validation failure: tempfile is too large!')
+        logger.error('tempfile validation failure: tempfile is too large!')
         return (None, None)
 
     ma = magic.Magic(mime=True)
     mimetype = ma.from_file(tempfile)
     if mimetype not in config('upload.accept_mimetypes'):
-        logger.info('tempfile validation failure: mimetype not allowed!')
+        logger.error('tempfile validation failure: mimetype not allowed!')
         return (None, None)
 
     return (filesize, mimetype)
@@ -45,6 +48,7 @@ def validate_file(tempfile):
 @celery.task
 def discover(item_id, tempfile, **data):
     """Discover a local file."""
+    logger.info('discover(item: {} tempfile: {} data: {})'.format(item_id, tempfile, data))
     url = data.pop('url', None)
     upload = data.pop('upload', None)
     try:
@@ -59,12 +63,4 @@ def discover(item_id, tempfile, **data):
         os.remove(tempfile)
         logger.debug('temporary file deleted: ' + tempfile)
 
-file_mapper.by_mimetype('image/*')(image.discover)
-"""
-@celery.task
-@file_mapper.by_mimetype('image/*')
-def image_dispatch(item_id, tempfile, **data):
-    image.discover.delay(item_id, tempfile, **data)
-"""
-    
 
